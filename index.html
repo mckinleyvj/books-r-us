@@ -9,15 +9,31 @@
   </head>
 
   <body>
-    <h1>Title</h1>
-    <div id="search_container">
-      <!--search-->
+    <!-- header with website name and description -->
+    <h1 class="heading">Books-R-Us</h1>
+    <p class="description">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. In mollitia quod
+      beatae exercitationem! Earum est saepe atque reprehenderit incidunt quas a
+      recusandae, nam non praesentium! Quae accusamus doloremque sunt minus?
+    </p>
+    <!-- end of header -->
 
-      <input type="text" placeholder="Search..." />
-      <div class="search"></div>
+    <!--  start of search button-->
+    <div class="search-box-container">
+      <button id="search-button">Search</button>
+      <input type="text" placeholder="Search..." id="search-input" />
     </div>
+    <!-- created section to apend search history-->
+    <section class="history-list-sty">
+      <ul id="history-list"></ul>
+    </section>
+    <!-- end of search button -->
+
+    <!--start of best sellers on the right-->
     <aside>
-      <!--new releases goes here..-->
+      <div class="best-sellers-container">
+        <h2>BEST SELLERS</h2>
+      </div>
     </aside>
   </body>
 </html>
