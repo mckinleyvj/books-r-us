@@ -4,36 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Book Project</title>
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Books-R-Us</title>
   </head>
 
-  <body>
+  <body class="body-container">
     <!-- header with website name and description -->
-    <h1 class="heading">Books-R-Us</h1>
-    <p class="description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. In mollitia quod
-      beatae exercitationem! Earum est saepe atque reprehenderit incidunt quas a
-      recusandae, nam non praesentium! Quae accusamus doloremque sunt minus?
-    </p>
+    <header class="header-container">
+      <h1 class="heading">Books-R-Us</h1>
+  </header>
     <!-- end of header -->
 
-    <!--  start of search button-->
-    <div class="search-box-container">
-      <button id="search-button">Search</button>
-      <input type="text" placeholder="Search..." id="search-input" />
-    </div>
-    <!-- created section to apend search history-->
-    <section class="history-list-sty">
-      <ul id="history-list"></ul>
-    </section>
-    <!-- end of search button -->
+    <main class="main-container">
+      <section id="search-box-container" class="search-box-container">
+        <!--  start of search container-->
+        <form id="search-form" class="search-form">
+          <button id="search-button" class="search-button">Search</button>
+          <input id="search-input" class="search-input" type="text" placeholder="Title, ISBN, Author">
+        </form>
+          <!-- start of search container -->
+           <!-- created section to apend search history-->
+        <!--<section id="history-list" class="history-list">
+        <div id="search-result" class="search-result"></div>
+        </section>-->
+      </section>
 
-    <!--start of best sellers on the right-->
-    <aside>
-      <div class="best-sellers-container">
-        <h2>BEST SELLERS</h2>
-      </div>
-    </aside>
+      <!--start of best sellers on the right-->
+      <aside id="best-seller" class="best-seller">
+        <div class="best-sellers-container">
+          <h2>BEST SELLERS</h2>
+        </div>
+      </aside>
+    </main>
   </body>
 </html>
