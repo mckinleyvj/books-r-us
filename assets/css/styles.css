@@ -1,67 +1,90 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 /* global variable */
 :root {
-  --primary-clr: rgb(208, 208, 61);
-  --secondary-clr: black;
+	--primary-clr: rgb(208, 208, 61);
+	--secondary-clr: black;
 }
 
 /* end of global variables */
-html {
-  min-height: 100%;
-  background-image: url(/images/background\ image.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: scroll;
-  opacity: 0.75;
+.body-container {
+	line-height: 1.5;
+	display: flex;
+	flex-direction: column;
+	width: 70vw;
+	margin: 0 auto;
 }
 
-body {
-  line-height: 1.5;
+.header-container {
+	min-height: 45vh;
+	background-image: url("https://source.unsplash.com/1600x900/?library");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	opacity: 0.75;
+	scroll-behavior: smooth;
+	background-attachment: scroll;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: -50;
+	margin-bottom: 10px;
 }
 
 .heading {
-  color: var(--primary-clr);
-  font-size: 5em;
-  text-align: center;
-  margin-top: 1.5em;
+	font-size: 5em;
+	text-align: center;
+	background-color: #00000d0;
+	opacity: 0.8;
+	color: #fff;
+	text-shadow: 5px 5px black;
 }
 
 .description {
-  text-align: center;
-  color: var(--secondary-clr);
-  font-size: 2em;
-  margin: 0 1.5em;
-  text-decoration: solid;
+	text-align: center;
+	color: var(--secondary-clr);
+	font-size: 2em;
+	margin: 0 1.5em;
+	text-decoration: solid;
+}
+
+.main-container {
+	display: flex;
+	flex-direction: row;
 }
 
 .search-box-container {
-  /* margin-left: ;
-  margin-top: 1.5em; */
-  margin: 2.5em 25em 1.5em;
+	/* margin-left: ;*/
+	flex: 0 100%;
+	/* margin: -50px 0px 0px 20px; */
+	display: flex;
+	flex-direction: column;
 }
 
 /* consider the border property repetition WIP */
-#search-input {
-  height: 50px;
-  width: 875px;
-  border: 2.5px solid black;
-  border-radius: 15px;
+.search-input {
+	height: 50px;
+	width: 400px;
+	border: 2.5px solid black;
+	border-radius: 15px;
+	padding: 10px;
 }
 
-#search-button {
-  height: 50px;
-  width: 75px;
-  border: 2.5px solid black;
-  border-radius: 15px;
+.search-button {
+	height: 50px;
+	width: 75px;
+	border: 2.5px solid black;
+	border-radius: 15px;
 }
 
-.best-sellers-container > h2 {
-  display: flex;
-  justify-content: right;
+.best-seller {
+	display: flex;
+	flex-direction: column;
+	flex: 0 30%;
+	justify-content: flex-start;
+	align-items: center;
 }
