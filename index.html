@@ -13,7 +13,7 @@
     <!-- header with website name and description -->
     <header class="header-container">
       <h1 class="heading">Books-R-Us</h1>
-  </header>
+    </header>
     <!-- end of header -->
 
     <main class="main-container">
@@ -21,21 +21,33 @@
         <!--  start of search container-->
         <form id="search-form" class="search-form">
           <button id="search-button" class="search-button">Search</button>
-          <input id="search-input" class="search-input" type="text" placeholder="Title, ISBN, Author">
+          <input
+            id="search-input"
+            class="search-input"
+            type="text"
+            placeholder="Title, ISBN, Author"
+          />
         </form>
-          <!-- start of search container -->
-           <!-- created section to apend search history-->
+        <!-- start of search container -->
+        <!-- created section to apend search history-->
         <!--<section id="history-list" class="history-list">
         <div id="search-result" class="search-result"></div>
         </section>-->
       </section>
 
       <!--start of best sellers on the right-->
-      <aside id="best-seller" class="best-seller">
+
+      <aside id="best-seller" class="best-seller">Best Sellers</aside>
+      <div id="best-seller-container"></div>
+      <!-- <aside id="best-seller" class="best-seller">
         <div class="best-sellers-container">
           <h2>BEST SELLERS</h2>
         </div>
-      </aside>
+      </aside> -->
     </main>
+
+    <!-- js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./assets/js/script.js"></script>
   </body>
 </html>
