@@ -117,16 +117,13 @@ function getBestSellerAPI() {
   });
 }
 
-function getSearchAPI() {
-
-  console.log(searchQuery);
-  console.log(searchType);
+function getSearchAPI(searchQ,searchT) {
 
   var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
   var queryType;
-  var user_input = searchQuery.replace(/\s/g, "+");
+  var user_input = searchQ.replace(/\s/g, "+");
 
-  switch (searchType) {
+  switch (searchT) {
       case "author":
         queryType = "inauthor:"; // Will need to be sanitized. For example Stephen King becomes Stephen+King using Splice() replace*()
         //searchQuery.replace(' ','+')
@@ -139,69 +136,38 @@ function getSearchAPI() {
         break;
       case "subject":
         queryType = "subject:";
+        break;
       case "all":
         queryType = "";
         break;
       default:
         queryType = "";
+        break;
     }
     
-    console.log(queryType);
-    let baseUrl = bookUrl + queryType + user_input;
+    var baseUrl = bookUrl + queryType + user_input;
 
-    console.log(baseUrl);
-    if (searchQuery !== "") {
-      $.ajax({
-        url: baseUrl,
-        method: "GET",
-        dataType: "json",
-  
-        beforeSend: function () {
-          $loader.show();
-        },
-  
-        complete: function () {
-          $loader.hide();
-          $searchContainer.show();
-        },
-  
-        success: function (res) {
-          
-          displaySearchResult(res);
-          
-        },
-        error: function () {
-          console.log("error");
-        },
-      });
-    } else {
-      console.log("invalid input");
-    }
-  // var user_input = usr_input.replace(/\s/g, "+");
-  // user_input = usr_input.trim();
-  // var APIUrl = "https://www.googleapis.com/books/v1/volumes?q=" + user_input + "&maxResults=10";
-  
-  // fetch(APIUrl, {
-  //     credentials: "same-origin",
-  //     referrerPolicy: "same-origin",
-  // })
-  // .then(function (response) {
-  //     if (!response.ok) {
-  //         throw response.json();
-  //     }
-  //     return response.json();
-  // })
-  // .then(function (data) {
-  //     console.log(data);
-  //     saveHistory(usr_input); 
-  //     displaySearchResult(data);
-  //     return;
-  // })
-  // .catch(function (err) {
-  //     console.log("Error\n" + err.message);
-  //     $searchContainer.show();
-  //     $searchContainer.append("Search result for " + usr_input + " is not found.");
-  // });
+    fetch(baseUrl, {
+      credentials: "same-origin",
+      referrerPolicy: "same-origin",
+  })
+  .then(function (response) {
+      if (!response.ok) {
+          throw response.json();
+      }
+      return response.json();
+  })
+  .then(function (data) {
+    console.log(searchQ);
+      saveHistory(searchQ); 
+      displaySearchResult(data);
+      return;
+  })
+  .catch(function (err) {
+      console.log("Error\n" + err.message);
+      $searchContainer.show();
+      $searchContainer.append("Search result for " + searchQ + " is not found.");
+  });
 }
 
 function clearSearchResults() {
@@ -209,10 +175,8 @@ function clearSearchResults() {
 }
 
 function displaySearchResult(result) {
-    //var result = data;
 
-    console.log(result);
-    $searchContainer.show();
+  $searchContainer.show();
 
     var resultItems = result['items'];
     var resultLength = resultItems.length;
@@ -220,10 +184,7 @@ function displaySearchResult(result) {
     var searchOutput = "";
 
     for (i=0;i<resultLength;i++) {
-      searchOutput += `
       
-      
-      `;
         var BookTitle = resultItems[i]['volumeInfo']['title'];
         if (BookTitle) {
             var infoLink = resultItems[i]['volumeInfo']['infoLink'];
@@ -458,7 +419,7 @@ function handleSearch() {
     }
 
     clearSearchResults();
-    getSearchAPI();
+    getSearchAPI(searchQuery,searchType);
     clearForm();
 
     return;
