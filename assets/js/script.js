@@ -1,100 +1,90 @@
-const bestSellers = document.getElementById("best-seller-container");
-var list = [];
+/*TANVI 30/10/2021*/
+const $bestSellers = $("#best-seller-container");
+var $searchFrm = $('#search-form');
+var $searchTxt = $("#search-input");
+var $histList = $('#search-history-list');
+var $searchSelect = $("#form-select");
+var $loader = $('#loader');
 
-// local storage to parse json as an array
-if (localStorage.getItem("searchItem")) {
-  list = localStorage.getItem("searchItem");
-  list = JSON.parse(list);
+var $searchContainer = $('#search-result-container');
+
+var $errorLblEl;
+var searchQuery;
+var searchType;
+
+var arr_hisSearch = [];
+var local_storedHis;
+
+function storeData() {
+  localStorage.setItem(
+      "searchItem", JSON.stringify(arr_hisSearch)
+  );
+  return; 
 }
 
-// appending the search items
-function searchList() {
-  let storedList = JSON.parse(localStorage.getItem("searchItem"));
-  document.querySelector("#search-history").innerHTML = "";
-  for (let i = 0; i < storedList.length; i++) {
-    document.querySelector("#search-history").append(storedList[i] + " , ");
+function saveHistory(inpt) {
+
+  //if none of the input matches with any existing items in array, push as new item
+  //lets check the length of array, if reaches 10, remove first item
+  for (i=0;i<arr_hisSearch.length;i++) {
+      //lets set both items to compare to upper case.
+      //this prevents saving the same search input of different character cases.
+      var cased_inpt = inpt.toUpperCase();
+      var cased_arrItem = arr_hisSearch[i].toUpperCase();
+      if (cased_arrItem.includes(cased_inpt)) {
+          //if the data exists, re-do search
+          clearSearchResults();
+          return;
+      }
+  }
+  
+  arr_hisSearch.push(inpt);
+  //console.log(arr_hisSearch);
+  //console.log(arr_hisSearch.length);
+  if (arr_hisSearch.length === 11) {
+      var new_arr = [];
+      //console.log("Array met limit");
+      //fill new array with existing array
+      new_arr = arr_hisSearch.slice(1);
+      arr_hisSearch = new_arr;
+  }
+
+  storeData();
+  loadHistory();
+  return;
+}
+
+function loadHistory() {
+  local_storedHis = JSON.parse(localStorage.getItem("searchItem"));
+
+  if (local_storedHis !== null) {
+      var arrUnsorted = [];
+      for (var j=0;j<local_storedHis.length;j++) {
+          arrUnsorted.push(local_storedHis[j]);
+      }
+      arr_hisSearch = arrUnsorted;
+      //console.log(arr_hisSearch);
+      displayHistEl();
+  }else {
+      return;
   }
 }
 
-if (list.length > 0) {
-  searchList();
-}
-
-$("#search-button").click(function (event) {
-  event.preventDefault();
-
-  var searchTitle = $("#search-input").val();
-  list.push(searchTitle);
-  localStorage.setItem("searchItem", JSON.stringify(list));
-
-  var responseURL =
-    "https://www.googleapis.com/books/v1/volumes?q=" +
-    searchTitle +
-    "&key=AIzaSyCT1bI8iN0RIzSLYEPmZUDiadmozUA0ZGI";
-
-  console.log(responseURL);
-  $.ajax({
-    url: responseURL,
-    method: "GET",
-  }).then(function (response) {
-    console.log(response);
-    $("#search-result").html("");
-    for (var i = 0; i < response.items.length; i++) {
-      var title = response.items[i].volumeInfo.title;
-      console.log(title);
-      var author = response.items[i].volumeInfo.authors;
-      console.log(author);
-      var publishedDate = response.items[i].volumeInfo.publishedDate;
-      var bookImg = response.items[i].volumeInfo.imageLinks.smallThumbnail;
-      var description = response.items[i].volumeInfo.description;
-      var previewB = response.items[i].volumeInfo.previewLink;
-
-      var displayBooks = $("<p>").html(
-        "Title: " +
-          title +
-          "<br>" +
-          "Author: " +
-          author +
-          "<br>" +
-          "Description: " +
-          description +
-          "<br>" +
-          "Published Date: " +
-          publishedDate +
-          "<hr>" +
-          "<br>"
-      );
-      var preview = $("<a>").attr("href", previewB);
-
-      var Img = $("<img>").attr("src", bookImg);
-
-      $("#search-result").append(Img, displayBooks, preview);
-
-      $("#search-result").css("display", "block");
-    }
-    searchList();
-    // $("#search-button").reset();
-  });
-});
-
+// SERVER APIs
 function getBestSellerAPI() {
   var NytAPIKey = "n0MXIKtdoTP0TGIXEBn3dResJCtNHSai";
 
   var queryURL =
     "https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=" +
     NytAPIKey;
-  console.log(queryURL);
 
   $.ajax({
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
 
     // declare best sellers in a response
     var bestSellers = response.results.books;
-
-    console.log(bestSellers);
 
     for (var i = 0; i < 5; i++) {
       var title = bestSellers[i].title;
@@ -118,125 +108,382 @@ function getBestSellerAPI() {
           "<br>"
       );
 
-      var displayImg = $("<img>").attr("src", bImg);
-      // $("#best-seller-container").append(displayImg);
-      $("#best-seller-container").append(displayImg, displayList);
+      var displayImg = $("<img>")
+      .attr("src", bImg)
+      .addClass('best-seller-img');
+
+      $bestSellers.append(displayImg, displayList);
     }
   });
-
-  // // declare best sellers in a response
-  // var bestSellers = response.results.books;
-
-  // console.log(bestSellers);
-
-  // for (var i = 0; i < 5; i++) {
-  //   var title = bestSellers[i].title;
-  //   var auth = bestSellers[i].author;
-  //   var bImg = bestSellers[i].book_image;
-  //   var description = bestSellers[i].description;
-  //   var rank = bestSellers[i].rank;
-
-  //   var displayList = $("<p>").html(
-  //     "Title: " +
-  //       title +
-  //       "<br>" +
-  //       "Author: " +
-  //       auth +
-  //       "<br>" +
-  //       "Description: " +
-  //       description +
-  //       "<br>" +
-  //       "Rating: " +
-  //       rank +
-  //       "<br>"
-  //   );
-
-  //   var displayImg = $("<img>").attr("src", bImg);
-  //   // $("#best-seller-container").append(displayImg);
-  //   $("#best-seller-container").append(displayImg, displayList);
-  // }
 }
 
-getBestSellerAPI();
+function getSearchAPI() {
 
-var searchContainer = document.getElementById("result-container");
-var queryType = "";
-var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
+  console.log(searchQuery);
+  console.log(searchType);
 
-$("#search-button").on("click", function (event) {
-  event.preventDefault();
-  let searchQuery = $("#search-input").val();
-  let baseUrl = bookUrl + queryType + searchQuery;
-  switch ($("form-select").val()) {
-    case "author":
-      queryType = "+inauthor"; // Will need to be sanitized. For example Stephen King becomes Stephen+King using Splice() replace*()
-      //searchQuery.replace(' ','+')
-      break;
-    case "title":
-      queryType = "+intitle";
-      break;
-    case "isbn":
-      queryType = "+isbn";
-      break;
-    case "subject":
-      queryType = "+subject";
-    case "all":
-      queryType = "";
-      break;
-    default:
-      queryType = "";
-  }
-  if (searchQuery !== "") {
-    $.ajax({
-      url: baseUrl,
-      method: "GET",
-      dataType: "json",
+  var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
+  var queryType;
+  var user_input = searchQuery.replace(/\s/g, "+");
 
-      beforeSend: function () {
-        $("#loader").show();
-      },
+  switch (searchType) {
+      case "author":
+        queryType = "inauthor:"; // Will need to be sanitized. For example Stephen King becomes Stephen+King using Splice() replace*()
+        //searchQuery.replace(' ','+')
+        break;
+      case "title":
+        queryType = "intitle:";
+        break;
+      case "isbn":
+        queryType = "isbn:";
+        break;
+      case "subject":
+        queryType = "subject:";
+      case "all":
+        queryType = "";
+        break;
+      default:
+        queryType = "";
+    }
+    
+    console.log(queryType);
+    let baseUrl = bookUrl + queryType + user_input;
 
-      complete: function () {
-        $("#loader").hide();
-        $(".results-container").show();
-      },
+    console.log(baseUrl);
+    if (searchQuery !== "") {
+      $.ajax({
+        url: baseUrl,
+        method: "GET",
+        dataType: "json",
+  
+        beforeSend: function () {
+          $loader.show();
+        },
+  
+        complete: function () {
+          $loader.hide();
+          $searchContainer.show();
+        },
+  
+        success: function (res) {
+          
+          displaySearchResult(res);
+          
+        },
+        error: function () {
+          console.log("error");
+        },
+      });
+    } else {
+      console.log("invalid input");
+    }
+  // var user_input = usr_input.replace(/\s/g, "+");
+  // user_input = usr_input.trim();
+  // var APIUrl = "https://www.googleapis.com/books/v1/volumes?q=" + user_input + "&maxResults=10";
+  
+  // fetch(APIUrl, {
+  //     credentials: "same-origin",
+  //     referrerPolicy: "same-origin",
+  // })
+  // .then(function (response) {
+  //     if (!response.ok) {
+  //         throw response.json();
+  //     }
+  //     return response.json();
+  // })
+  // .then(function (data) {
+  //     console.log(data);
+  //     saveHistory(usr_input); 
+  //     displaySearchResult(data);
+  //     return;
+  // })
+  // .catch(function (err) {
+  //     console.log("Error\n" + err.message);
+  //     $searchContainer.show();
+  //     $searchContainer.append("Search result for " + usr_input + " is not found.");
+  // });
+}
 
-      success: function (res) {
-        // console.log(res);
+function clearSearchResults() {
+    $searchContainer.text('');
+}
 
-        var searchOutput = "";
+function displaySearchResult(result) {
+    //var result = data;
 
-        for (var i = 0; i < res.items.length; i++) {
-          searchOutput += `
-            <div>
-            <h4>${res.items[i].volumeInfo.title}</h4>
-            <br>
-            <img src="${res.items[i].volumeInfo.imageLinks.smallThumbnail}">
-            <br>
-            <p>${res.items[i].volumeInfo.authors}</p>
-            <p>${res.items[i].volumeInfo.publishedDate}</p>
-            <p class="ISBN">ISBN-13 No: ${res.items[i].volumeInfo.industryIdentifiers[0].identifier}</p>
-            <p>${res.items[i].volumeInfo.description}</p>
-            <a href="${res.items[i].volumeInfo.previewLink}" type="url">Preview Book</a>
-            </div>
-            <br>
-            `;
+    console.log(result);
+    $searchContainer.show();
+
+    var resultItems = result['items'];
+    var resultLength = resultItems.length;
+
+    var searchOutput = "";
+
+    for (i=0;i<resultLength;i++) {
+      searchOutput += `
+      
+      
+      `;
+        var BookTitle = resultItems[i]['volumeInfo']['title'];
+        if (BookTitle) {
+            var infoLink = resultItems[i]['volumeInfo']['infoLink'];
+            if (infoLink) {
+                var disp_title = $('<a>')
+                .attr('href',infoLink)
+                .attr('id','infoLink')
+                .addClass('item-title')
+                .append(BookTitle);
+            }else {
+                var disp_title = $('<p>')
+                .addClass('item-title')
+                .append(BookTitle);
+            }
         }
-        if (searchOutput !== "") {
-          $("#search-list").html(searchOutput);
-          console.log(searchQuery);
-        } else {
-          let noReslts =
-            "There are no matching results for your query. Please try again.";
-          $("#search-list").html(noReslts);
-          console.log(searchQuery);
+
+         //var BookDesc = resultItems[i]['searchInfo']['textSnippet'];
+        var BookDesc = resultItems[i]['volumeInfo']['description'];
+        if (BookDesc) {
+            var disp_desc = $('<p>')
+            .addClass('item-desc')
+            .append(BookDesc);
         }
-      },
-      error: function () {
-        console.log("error");
-      },
-    });
-  } else {
-    console.log("invalid input");
-  }
+
+        var BookAuthor_s = resultItems[i]['volumeInfo']['authors'];
+        if (BookAuthor_s) {
+            var Author_sLen = BookAuthor_s.length;
+            //console.log(Author_sLen);
+            var $disp_authr_head = $('<div>')
+            .addClass('item-author')
+            .append("Author(s):");
+
+            for (j=0;j<Author_sLen;j++) {
+                //console.log(BookAuthor_s[j]);
+                var disp_authr= $('<p>')
+                .append(BookAuthor_s[j]);
+
+                $disp_authr_head.append(disp_authr);
+            }
+        }
+
+        var BookDesc = resultItems[i]['volumeInfo']['description'];
+        if (BookDesc) {
+            var disp_desc = $('<p>')
+            .addClass('item-desc')
+            .append(BookDesc);
+        }
+
+        var BookPublisher = resultItems[i]['volumeInfo']['publisher'];
+        var BookPublDate = resultItems[i]['volumeInfo']['publishedDate'];
+
+        //var pubDate = moment(BookPublDate).format("DD-MMMM-YYYY");
+        var pubDate = BookPublDate;
+
+        if (BookPublisher) {
+            if (BookPublDate) {
+                
+                var BookPublisher = $('<p>')
+                .addClass('item-published')
+                .append('Published: ' + BookPublisher + ', ' + pubDate);
+            }else {
+                var BookPublisher = $('<p>')
+                .addClass('item-published')
+                .append('Published: ' + BookPublisher);
+            }
+        }else {
+            if (BookPublDate) {
+                var BookPublisher = $('<p>')
+                .addClass('item-published')
+                .append('Published: ' + pubDate);
+            }
+        }
+
+        var BooksImage = resultItems[i]['volumeInfo']['imageLinks'];
+        var previewLink = resultItems[i]['volumeInfo']['previewLink'];
+        var disp_prevLink;
+        if (previewLink) {
+            disp_prevLink = $('<a>')
+                .attr('href',previewLink)
+                .attr('target','_blank')
+                .attr('id','previewLink')
+                .addClass('item-link')
+                .append('Preview Book');
+        }else {
+            disp_prevLink.text('');
+        }
+
+        if (BooksImage) {
+            //var BookSThumbN = resultItems[i]['volumeInfo']['imageLinks']['smallThumbnail'];
+            var BookThumbN = resultItems[i]['volumeInfo']['imageLinks']['thumbnail'];
+            // console.log("Small Img: " + BookSThumbN);
+            // console.log("Img: " + BookThumbN);
+            
+            $itemImg = $('<img>')
+            .attr('src',BookThumbN)
+            .addClass('img-border');
+
+            var $itemImgDiv = $('<div>')
+            .addClass('item-img')
+            .append($itemImg,disp_prevLink);
+        }else {
+            $itemImg = $('<img>')
+            .attr('alt','Image not available')
+            .addClass('img-border');
+
+            var $itemImgDiv = $('<div>')
+            .addClass('item-img')
+            .append($itemImg,disp_prevLink);
+        }
+       
+        var BookID = resultItems[i]['volumeInfo']['industryIdentifiers'];
+        if (BookID) {
+            var BookIDLen = BookID.length;
+            //console.log(BookIDLen);
+            var $disp_id_head = $('<div>')
+            .addClass('item-id')
+            .append("Identifier(s):");
+
+            for (k=0;k<BookIDLen;k++) {
+                var disp_id= $('<p>')
+                .append(BookID[k]['type'] + BookID[k]['identifier']);
+                $disp_id_head.append(disp_id);
+            }
+        }
+
+        var $SResultListItem = $('<li>')
+        .addClass('search-result-list');
+
+        var $SResultListItemInfo = $('<div>')
+        .addClass('item-desc');
+
+        $SResultListItemInfo.append(disp_title,disp_desc,$disp_authr_head,BookPublisher,$disp_id_head);
+        $SResultListItem.append($itemImgDiv,$SResultListItemInfo);
+        $searchContainer.append($SResultListItem);
+    }
+}
+
+function displayHistEl() {
+
+    $histList.text('');    
+
+    for (x=0;x<arr_hisSearch.length;x++) {
+
+        var search_item = arr_hisSearch[x];
+
+        var $historyListItem = $('<button>')
+            .attr('id', 'search-history-item')
+            .attr('data-index', x)
+            .addClass('search-history-item');
+
+        $liBtnEl = $('<button>')
+            .attr('id', 'delete-history-item')
+            .attr('data-index', x)
+            .addClass('delete-history-item')
+            .append('X');
+        
+        $historyListItem.append(search_item,$liBtnEl);
+        
+        $histList.append($historyListItem);
+    }
+    return;
+}
+
+function handleEvent(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    
+    var target_el = event.target;
+
+    if (target_el.id === 'search-button') {
+        searchQuery = $searchTxt.val(); 
+        searchType = $searchSelect.val();
+        handleSearch();
+    }
+
+    if (target_el.id === 'search-history-item') {
+        var trgt = event.target;
+        var name = trgt.textContent;
+        var search_name = name.slice(0, name.length - 1);
+        //console.log(search_name);
+        searchQuery = search_name;
+        //loc_type = "city";
+        handleSearch();
+    }
+
+    if (target_el.id === 'delete-history-item') {
+        var index = target_el.parentElement.getAttribute("data-index");
+        arr_hisSearch.splice(index, 1);
+
+        storeData();
+        displayHistEl();
+
+        clearForm();
+        // location.reload();
+    }
+
+    if (target_el.id === 'infoLink') {
+        var infoLink = target_el.getAttribute('href');
+        window.open(infoLink, '_blank');
+    }
+
+    if (target_el.id === 'previewLink') {
+        var previewLink = target_el.getAttribute('href');
+        window.open(previewLink, '_blank');
+    }
+    
+}
+
+function handleSearch() {
+    if (!searchQuery) {
+
+        //console.log("Error: Input string not found.");
+
+        if ($errorLblEl) {
+            $errorLblEl.remove();
+        }        
+
+        $errorLblEl = $('<label>')
+            .attr('type', 'text')
+            .addClass('input-error')
+            .append('*Error: Please enter a value');
+
+        $searchFrm.append($errorLblEl);
+
+        $($searchTxt.focus());
+        return;
+    }
+
+    if ($errorLblEl) {
+        $errorLblEl.remove();
+    }
+
+    clearSearchResults();
+    getSearchAPI();
+    clearForm();
+
+    return;
+}
+
+function clearForm() {
+    searchQuery = "";
+    $($searchTxt).val('');
+    $($searchTxt.focus());
+}
+
+function initiate() {
+    loadHistory();
+    getBestSellerAPI();
+    $searchContainer.hide();
+    $searchTxt.focus();
+    //console.log(arr_hisSearch);
+}
+
+initiate();
+
+$(window).ready(function () {
+
+    $(window).on('click', handleEvent);
+
 });
+
+
