@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
     <title>Books-R-Us</title>
     <link
       rel="apple-touch-icon"
@@ -38,13 +44,23 @@
       <section id="search-box-container" class="search-box-container">
         <!--  start of search container-->
         <form id="search-form" class="search-form">
-          <button id="search-button" class="search-button">Search</button>
+          <select id="form-select" name="type">
+            <option value="all">All</option>
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="subject">Subject</option>
+            <option value="isbn">ISBN</option>
+          </select>
+
           <input
             id="search-input"
             class="search-input"
             type="text"
             placeholder="Title, ISBN, Author"
           />
+          <button id="search-button" class="search-button">
+            <i class="fas fa-search" width="1.5em" height="1.5em"></i>
+          </button>
         </form>
         <!-- end of search button -->
         <!-- past searches -->
@@ -63,7 +79,9 @@
       </section>
 
       <section class="results-container">
-        <h2 class="search-results">Search Results <span id="queryTerm"></span></h2>
+        <h2 class="search-results">
+          Search Results <span id="queryTerm"></span>
+        </h2>
         <div id="search-list" class=""></div>
       </section>
 

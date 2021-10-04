@@ -159,44 +159,55 @@ function getBestSellerAPI() {
 
 getBestSellerAPI();
 
-
 var searchContainer = document.getElementById("result-container");
+var queryType = "";
+var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
 
-var bookUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
+$("#search-button").on("click", function (event) {
+  event.preventDefault();
+  let searchQuery = $("#search-input").val();
+  let baseUrl = bookUrl + queryType + searchQuery;
+  switch ($("form-select").val()) {
+    case "author":
+      queryType = "+inauthor"; // Will need to be sanitized. For example Stephen King becomes Stephen+King using Splice() replace*()
+      //searchQuery.replace(' ','+')
+      break;
+    case "title":
+      queryType = "+intitle";
+      break;
+    case "isbn":
+      queryType = "+isbn";
+      break;
+    case "subject":
+      queryType = "+subject";
+    case "all":
+      queryType = "";
+      break;
+    default:
+      queryType = "";
+  }
+  if (searchQuery !== "") {
+    $.ajax({
+      url: baseUrl,
+      method: "GET",
+      dataType: "json",
 
-$(function bookSearch() {
-  $("#search-button").on("click", function(event) {
-    event.preventDefault();
-    // console.log("you've clicked");
+      beforeSend: function () {
+        $("#loader").show();
+      },
 
-    let searchQuery = $("#search-input").val();
-    let baseUrl = bookUrl + searchQuery;
+      complete: function () {
+        $("#loader").hide();
+        $(".results-container").show();
+      },
 
-    // console.log(baseUrl);
+      success: function (res) {
+        // console.log(res);
 
-    if(searchQuery !== ""){
+        var searchOutput = "";
 
-      $.ajax({
-        url: baseUrl,
-        method: "GET",
-        dataType: "json",
-
-        beforeSend: function() {
-          $("#loader").show();
-        },
-
-        complete: function(){
-          $("#loader").hide();
-          $(".results-container").show();
-        },
-
-        success: function(res) {
-          console.log(res);
-
-          var searchOutput = "";
-
-          for (var i = 0; i < res.items.length; i++) {
-            searchOutput += `
+        for (var i = 0; i < res.items.length; i++) {
+          searchOutput += `
             <div>
             <h4>${res.items[i].volumeInfo.title}</h4>
             <br>
@@ -209,25 +220,23 @@ $(function bookSearch() {
             <a href="${res.items[i].volumeInfo.previewLink}" type="url">Preview Book</a>
             </div>
             <br>
-            `
-          }
-          if(searchOutput !== "") {
-            $("#search-list").html(searchOutput);
-            console.log(searchQuery);
-
-          } else {
-            let noReslts = "There are no matching results for your query. Please try again."
-            $("#search-list").html(noReslts);
-            console.log(searchQuery);
-          }
-        },
-        error: function() {
-          console.log("error");
+            `;
         }
-      });
-    }else{
-      console.log("pls enter something");
-    }
-  });
-  
+        if (searchOutput !== "") {
+          $("#search-list").html(searchOutput);
+          console.log(searchQuery);
+        } else {
+          let noReslts =
+            "There are no matching results for your query. Please try again.";
+          $("#search-list").html(noReslts);
+          console.log(searchQuery);
+        }
+      },
+      error: function () {
+        console.log("error");
+      },
+    });
+  } else {
+    console.log("invalid input");
+  }
 });
