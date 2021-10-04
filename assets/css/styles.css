@@ -119,3 +119,17 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.search-result {
+  border: 2px solid black;
+  display: none;
+  padding: 5px;
+}
+
+.history {
+  border: 2px solid black;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 4.5px;
+}
