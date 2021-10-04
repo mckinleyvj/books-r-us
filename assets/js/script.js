@@ -147,27 +147,63 @@ function getSearchAPI(searchQ,searchT) {
     
     var baseUrl = bookUrl + queryType + user_input;
 
-    fetch(baseUrl, {
-      credentials: "same-origin",
-      referrerPolicy: "same-origin",
-  })
-  .then(function (response) {
-      if (!response.ok) {
-          throw response.json();
-      }
-      return response.json();
-  })
-  .then(function (data) {
-    console.log(searchQ);
-      saveHistory(searchQ); 
-      displaySearchResult(data);
-      return;
-  })
-  .catch(function (err) {
-      console.log("Error\n" + err.message);
-      $searchContainer.show();
-      $searchContainer.append("Search result for " + searchQ + " is not found.");
-  });
+    if(searchQ !== ""){
+      $.ajax({
+        url: baseUrl,
+        method: "GET",
+        dataType: "json",
+  
+        beforeSend: function() {
+          $loader.show();
+        },
+        complete: function(){
+          $loader.hide();
+          $searchContainer.show();
+        },
+        success: function(res) {
+          //console.log(res);
+          if (res.totalItems === 0 ) {
+            //console.log("Error\n" + err.message);
+            $searchContainer.show();
+            $searchContainer.append("Search result for " + searchQ + " is not found.");
+          }else {
+            //console.log(searchQ);
+            saveHistory(searchQ);
+            displaySearchResult(res);
+            return;
+          }
+        },
+        error: function(err) {
+          console.log("Error\n" + err.message);
+          $searchContainer.show();
+          $searchContainer.append("Search result for " + searchQ + " is not found.");
+        }
+      });
+    }
+
+    // fetch(baseUrl, {
+    //   credentials: "same-origin",
+    //   referrerPolicy: "same-origin",
+    // })
+    // .then(function (response) {
+    //     if (!response.ok) {
+    //         throw response.json();
+    //     }
+    //     $loader.show();
+    //     return response.json();
+    // })
+    // .then(function (data) {
+    //   console.log(data);
+    //   $loader.hide();
+    //     saveHistory(searchQ); 
+    //     displaySearchResult(data);
+    //     return;
+    // })
+    // .catch(function (err) {
+    //     console.log("Error\n" + err.message);
+    //     $searchContainer.show();
+    //     $searchContainer.append("Search result for " + searchQ + " is not found.");
+    // });
 }
 
 function clearSearchResults() {
@@ -180,8 +216,6 @@ function displaySearchResult(result) {
 
     var resultItems = result['items'];
     var resultLength = resultItems.length;
-
-    var searchOutput = "";
 
     for (i=0;i<resultLength;i++) {
       
@@ -397,8 +431,6 @@ function handleEvent(event) {
 function handleSearch() {
     if (!searchQuery) {
 
-        //console.log("Error: Input string not found.");
-
         if ($errorLblEl) {
             $errorLblEl.remove();
         }        
@@ -446,5 +478,3 @@ $(window).ready(function () {
     $(window).on('click', handleEvent);
 
 });
-
-
