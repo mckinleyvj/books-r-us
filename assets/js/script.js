@@ -1,4 +1,3 @@
-/*TANVI 30/10/2021*/
 const $bestSellers = $("#best-seller-container");
 var $searchFrm = $('#search-form');
 var $searchTxt = $("#search-input");
@@ -39,11 +38,8 @@ function saveHistory(inpt) {
   }
   
   arr_hisSearch.push(inpt);
-  //console.log(arr_hisSearch);
-  //console.log(arr_hisSearch.length);
   if (arr_hisSearch.length === 11) {
       var new_arr = [];
-      //console.log("Array met limit");
       //fill new array with existing array
       new_arr = arr_hisSearch.slice(1);
       arr_hisSearch = new_arr;
@@ -63,7 +59,6 @@ function loadHistory() {
           arrUnsorted.push(local_storedHis[j]);
       }
       arr_hisSearch = arrUnsorted;
-      //console.log(arr_hisSearch);
       displayHistEl();
   }else {
       return;
@@ -181,6 +176,7 @@ function getSearchAPI(searchQ,searchT) {
       });
     }
 
+    // ALTERNATE FETCH METHOD
     // fetch(baseUrl, {
     //   credentials: "same-origin",
     //   referrerPolicy: "same-origin",
