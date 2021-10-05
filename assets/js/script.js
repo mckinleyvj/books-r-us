@@ -83,11 +83,11 @@ function getBestSellerAPI() {
         <div class="bestseller-list">
         <h4>${bestSellers[i].title}</h4>
         <img class="best-seller-img" src="${bestSellers[i].book_image}">
-        <p>${bestSellers[i].description}</p>
         <br>
         <p>Ranking: ${bestSellers[i].rank}</p>
         <p>Last Week Ranking: ${bestSellers[i].rank_last_week || "N/A"}</p>
         <p>Weeks on List: ${bestSellers[i].weeks_on_list || "New this week"}</p>
+        <br>
         </div>
       `;    
 
