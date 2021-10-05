@@ -87,7 +87,7 @@ function getBestSellerAPI() {
       var weeksOnList = bestSellers[i].weeks_on_list || "New this week";
 
       var displayList = $("<p>").html(
-        "Title: " +
+          "Title: " + 
           title +
           "<br>" +
           "Author: " +
@@ -108,6 +108,7 @@ function getBestSellerAPI() {
       var displayImg = $("<img>").attr("src", bImg).addClass("best-seller-img");
 
       $bestSellers.append(displayImg, displayList);
+
     }
   });
 }

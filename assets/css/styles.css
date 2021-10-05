@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: Lora, serif;
 }
 
 /* global variable */
@@ -247,4 +248,17 @@ h2 {
 	padding: 10px;
 	text-align: justify;
 	font-size: 18px;
+}
+
+@media screen and (max-width: 1024px) {
+	.header-container {
+		min-height: 20vh;
+	}
+	  .main-container {
+		width: 88vw;
+		padding: 0.5em;
+	  }
+	  .item-title {
+		text-align: center;
+	  }
 }
