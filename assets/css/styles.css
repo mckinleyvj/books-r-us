@@ -265,3 +265,16 @@ h2 {
     text-align: center;
   }
 }
+
+@media screen and (max-width: 1024px) {
+	.header-container {
+		min-height: 20vh;
+	}
+	  .main-container {
+		width: 88vw;
+		padding: 0.5em;
+	  }
+	  .item-title {
+		text-align: center;
+	  }
+}
