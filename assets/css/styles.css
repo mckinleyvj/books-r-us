@@ -84,6 +84,7 @@ select {
 	width: 75px;
 	border: 2.5px solid black;
 	border-radius: 15px;
+	cursor: pointer;
 }
 
 .input-error {
@@ -124,6 +125,7 @@ select {
 	align-items: center;
 	flex: 0 30%;
 	padding-left: 10px;
+	margin-left: 40px;
 }
 
 .best-seller-container {
@@ -131,11 +133,25 @@ select {
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
+	border: 5px solid black;
+	padding: 8px;
+}
+
+h2 {
+	font-size: 35px;
+	margin-bottom: 10px;
+}
+
+.best-seller-container > p {
+	margin-bottom: 10px;
+	font-size: 18px;
 }
 
 .best-seller-img {
 	height: 198px;
 	width: 128px;
+	border-radius: 5px;
+	margin: 15px;
 }
 
 .search-result-container {
@@ -144,6 +160,7 @@ select {
 	list-style: none;
 	margin: 5px 0px 5px 0px;
 	width: 100%;
+	
 }
 
 .search-result-list {
@@ -152,6 +169,8 @@ select {
 	display: flex;
 	flex-direction: row;
 	min-height: 237px;
+	margin: 10px 0;
+	border-radius: 12px;
 }
 
 .search-history-list {
@@ -173,16 +192,20 @@ select {
 	border-radius: 10px;
 }
 
+
 .img-border {
 	border: 2px solid gray;
 	height: 195px;
 	width: 128px;
+	border-radius: 9px;
 }
 
 .item-title {
-	font-size: 20px;
+	font-size: 25px;
 	font-weight: bold;
 	padding: 0px 10px 0px 10px;
+	text-decoration: none;
+	color: rgb(3, 151, 132);
 }
 
 .item-img {
@@ -191,6 +214,20 @@ select {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+}
+
+.item-link {
+	text-decoration: none;
+	margin-top: 15px;
+	font-size: 18px;
+	border: 2px groove rgb(54, 54, 146);
+	border-radius: 5px;
+	padding: 5px;
+	color: rgb(48, 48, 53);
+}
+
+.item-link:hover {
+	background-color: rgb(103, 219, 248);
 }
 
 .item-desc,
@@ -202,4 +239,5 @@ select {
 	flex: 1 100%;
 	padding: 10px;
 	text-align: justify;
+	font-size: 18px;
 }
