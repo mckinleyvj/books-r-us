@@ -103,6 +103,7 @@ function getBestSellerAPI() {
           " | Weeks on list: " +
           weeksOnList +
           "<br>"
+          
       );
 
       var displayImg = $("<img>").attr("src", bImg).addClass("best-seller-img");
