@@ -7,21 +7,25 @@ Tanvi Abhyankar
 Binuka Witharana
 
 ## Description:
+
 A group project that demonstrates the uses of server-side APIs, git source control and agile dev methodologies.
 
 This two weeks group project, we will be creating a book search webpage using 2 server-side APIs.
+
 1. Google Books API
 2. New York Times API
 
 ## Acceptance Criteria
-* It's done when user key in a descriptive text on the search input.
-* It's done when user submits the query and the page will load results on the screen with information such as Book Title, Description, Author, Publisher and ISBN.
-* It's done when user isolate the search query by selecting the type of search by Title, Author, Subject.
-* It's done when user is able to click the title of the book search result and brings the user to the original website for further actions such as purchases/renting or checking reviews.
-* It's done when user is able to preview the book from a link.
-* It's done when the user is able to view best seller from New York Times.
+
+- It's done when user key in a descriptive text on the search input.
+- It's done when user submits the query and the page will load results on the screen with information such as Book Title, Description, Author, Publisher and ISBN.
+- It's done when user isolate the search query by selecting the type of search by Title, Author, Subject.
+- It's done when user is able to click the title of the book search result and brings the user to the original website for further actions such as purchases/renting or checking reviews.
+- It's done when user is able to preview the book from a link.
+- It's done when the user is able to view best seller from New York Times.
 
 ## Actions Taken and changes:
+
 - Initial Commit - Created repository at GitHub and updated readme.
 - Added contributors and configure the GitHub Repository to disable git push to main branch.
 - Discussed the final result of webpage and server-side APIs to be used.
@@ -39,3 +43,4 @@ This two weeks group project, we will be creating a book search webpage using 2 
 
 - GitHub Repository: https://github.com/mckinleyvj/books-r-us
 - GitHub Live URL: https://mckinleyvj.github.io/books-r-us/
+- Presentation Link: https://docs.google.com/presentation/d/1R0oO4AQZ2slr6ZGIemwWVzim33VOdnT2A69Be-5avmU/edit?usp=sharing
