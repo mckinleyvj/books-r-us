@@ -278,3 +278,39 @@ h2 {
 		text-align: center;
 	}
 }
+
+@media screen and (max-width: 425px) {
+	.heading {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 20px;
+	}
+	.main-container {
+		width: 100vw;
+		padding: 0px 5px 0px 5px;
+	}
+	.search-result-list {
+		flex-direction: column;
+	}
+	.search-history-list {
+		justify-content: center;
+	}
+	.item-title {
+		font-size: 20px;
+		text-align: center;
+	}
+	.item-desc,
+	.item-author,
+	.item-published,
+	.item-id {
+		font-size: 12px;
+		line-height: 1.5;
+	}
+	.item-link {
+		font-size: 12px;
+	}
+	.search-result-container {
+		align-items: center;
+	}
+}
