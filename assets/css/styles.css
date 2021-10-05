@@ -253,4 +253,14 @@ h2 {
   .best-seller-container {
     width: 99vw;
   }
+  .best-seller-img {
+    width: 10em;
+  }
+  .main-container {
+    width: 100vw;
+    padding: 0.5em;
+  }
+  .item-title {
+    text-align: center;
+  }
 }
