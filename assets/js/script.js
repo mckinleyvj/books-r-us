@@ -76,39 +76,22 @@ function getBestSellerAPI() {
   }).then(function (response) {
     // declare best sellers in a response
     var bestSellers = response.results.books;
+    var displayList = "";
 
     for (var i = 0; i < 5; i++) {
-      var title = bestSellers[i].title;
-      var auth = bestSellers[i].author;
-      var bImg = bestSellers[i].book_image;
-      var description = bestSellers[i].description;
-      var rank = bestSellers[i].rank;
-      var rankLastWeek = bestSellers[i].rank_last_week || "N/A";
-      var weeksOnList = bestSellers[i].weeks_on_list || "New this week";
+      displayList = `
+        <div class="bestseller-list">
+        <h4>${bestSellers[i].title}</h4>
+        <img class="best-seller-img" src="${bestSellers[i].book_image}">
+        <p>${bestSellers[i].description}</p>
+        <br>
+        <p>Ranking: ${bestSellers[i].rank}</p>
+        <p>Last Week Ranking: ${bestSellers[i].rank_last_week || "N/A"}</p>
+        <p>Weeks on List: ${bestSellers[i].weeks_on_list || "New this week"}</p>
+        </div>
+      `;    
 
-      var displayList = $("<p>").html(
-          "Title: " + 
-          title +
-          "<br>" +
-          "Author: " +
-          auth +
-          "<br>" +
-          "Description: " +
-          description +
-          "<br>" +
-          "Rank: " +
-          rank +
-          " | Rank last week: " +
-          rankLastWeek +
-          " | Weeks on list: " +
-          weeksOnList +
-          "<br>"
-          
-      );
-
-      var displayImg = $("<img>").attr("src", bImg).addClass("best-seller-img");
-
-      $bestSellers.append(displayImg, displayList);
+      $bestSellers.append(displayList);
 
     }
   });
