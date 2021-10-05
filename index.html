@@ -5,99 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-    <title>Books-R-Us</title>
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./assets/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./assets/favicon/favicon-16x16.png"
-    />
     <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/> 
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href=".//assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+    
+    <title>Books-R-Us</title>
   </head>
 
   <body class="body-container">
     <!-- header with website name and description -->
-    <header class="header-container">
+    <header id="_top" class="header-container">
       <h1 class="heading">Books-R-Us</h1>
     </header>
     <!-- end of header -->
 
     <main class="main-container">
+      <!--  start of search container-->
       <section id="search-box-container" class="search-box-container">
-        <!--  start of search container-->
         <form id="search-form" class="search-form">
           <select id="form-select" name="type">
             <option value="all">All</option>
             <option value="title">Title</option>
             <option value="author">Author</option>
             <option value="subject">Subject</option>
-            <option value="isbn">ISBN</option>
           </select>
 
-          <input
-            id="search-input"
-            class="search-input"
-            type="text"
-            placeholder="Title, ISBN, Author"
-          />
+          <input id="search-input" class="search-input" type="text" placeholder="Author, Keyword, Title..." />
           <button id="search-button" class="search-button">
             <i class="fas fa-search" width="1.5em" height="1.5em"></i>
           </button>
         </form>
-        <!-- end of search button -->
+
         <!-- past searches -->
-        <section class="history">
-          <h2>Past Searches:</h2>
-          <div id="search-history"></div>
+        <div id="search-history-list" class="search-history-list"></div>
+        <div id="search-result-container" class="search-result-container"></div>
+        <div id="loader" style="display:none;"></div>
         </section>
 
-        <!-- start of search container -->
-        <!-- created section to apend search history-->
-        <!--<section id="history-list" class="history-list">
-        <div id="search-result" class="search-result"></div>
-        </section>-->
-        <!-- section to display book results -->
-        <div id="search-result" class="search-result"></div>
-      </section>
-
-      <section class="results-container">
-        <h2 class="search-results">
-          Search Results <span id="queryTerm"></span>
-        </h2>
-        <div id="search-list" class=""></div>
-      </section>
-
-      <!--start of best sellers on the right-->
-
-      <aside id="best-seller" class="best-seller">Best Sellers</aside>
-      <div id="best-seller-container"></div>
-      <!-- <aside id="best-seller" class="best-seller">
-        <div class="best-sellers-container">
-          <h2>BEST SELLERS</h2>
-        </div>
-      </aside> -->
+        <!-- best seller section -->
+      <aside id="best-seller" class="best-seller">Best Sellers
+        <div id="best-seller-container" class="best-seller-container"></div>
+      </aside>
     </main>
 
-    <!-- js link -->
+    <!-- jQuery link-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- script link -->
     <script type="text/javascript" src="./assets/js/script.js"></script>
   </body>
 </html>
