@@ -37,7 +37,6 @@ function saveHistory(inpt) {
   arr_hisSearch.push(inpt);
   if (arr_hisSearch.length === 11) {
     var new_arr = [];
-    //fill new array with existing array
     new_arr = arr_hisSearch.slice(1);
     arr_hisSearch = new_arr;
   }
@@ -104,8 +103,7 @@ function getSearchAPI(searchQ, searchT) {
 
   switch (searchT) {
     case "author":
-      queryType = "inauthor:"; // Will need to be sanitized. For example Stephen King becomes Stephen+King using Splice() replace*()
-      //searchQuery.replace(' ','+')
+      queryType = "inauthor:";
       break;
     case "title":
       queryType = "intitle:";
@@ -140,15 +138,12 @@ function getSearchAPI(searchQ, searchT) {
         $searchContainer.show();
       },
       success: function (res) {
-        //console.log(res);
         if (res.totalItems === 0) {
-          //console.log("Error\n" + err.message);
           $searchContainer.show();
           $searchContainer.append(
             "Search result for " + searchQ + " is not found."
           );
         } else {
-          //console.log(searchQ);
           saveHistory(searchQ);
           displaySearchResult(res);
           return;
@@ -164,30 +159,6 @@ function getSearchAPI(searchQ, searchT) {
     });
   }
 
-  // ALTERNATE FETCH METHOD
-  // fetch(baseUrl, {
-  //   credentials: "same-origin",
-  //   referrerPolicy: "same-origin",
-  // })
-  // .then(function (response) {
-  //     if (!response.ok) {
-  //         throw response.json();
-  //     }
-  //     $loader.show();
-  //     return response.json();
-  // })
-  // .then(function (data) {
-  //   console.log(data);
-  //   $loader.hide();
-  //     saveHistory(searchQ);
-  //     displaySearchResult(data);
-  //     return;
-  // })
-  // .catch(function (err) {
-  //     console.log("Error\n" + err.message);
-  //     $searchContainer.show();
-  //     $searchContainer.append("Search result for " + searchQ + " is not found.");
-  // });
 }
 
 function clearSearchResults() {
@@ -215,7 +186,6 @@ function displaySearchResult(result) {
       }
     }
 
-    //var BookDesc = resultItems[i]['searchInfo']['textSnippet'];
     var BookDesc = resultItems[i]["volumeInfo"]["description"];
     if (BookDesc) {
       var disp_desc = $("<p>").addClass("item-desc").append(BookDesc);
@@ -224,13 +194,11 @@ function displaySearchResult(result) {
     var BookAuthor_s = resultItems[i]["volumeInfo"]["authors"];
     if (BookAuthor_s) {
       var Author_sLen = BookAuthor_s.length;
-      //console.log(Author_sLen);
       var $disp_authr_head = $("<div>")
         .addClass("item-author")
         .append("Author(s):");
 
       for (j = 0; j < Author_sLen; j++) {
-        //console.log(BookAuthor_s[j]);
         var disp_authr = $("<p>").append(BookAuthor_s[j]);
 
         $disp_authr_head.append(disp_authr);
@@ -245,7 +213,6 @@ function displaySearchResult(result) {
     var BookPublisher = resultItems[i]["volumeInfo"]["publisher"];
     var BookPublDate = resultItems[i]["volumeInfo"]["publishedDate"];
 
-    //var pubDate = moment(BookPublDate).format("DD-MMMM-YYYY");
     var pubDate = BookPublDate;
 
     if (BookPublisher) {
@@ -281,10 +248,7 @@ function displaySearchResult(result) {
     }
 
     if (BooksImage) {
-      //var BookSThumbN = resultItems[i]['volumeInfo']['imageLinks']['smallThumbnail'];
       var BookThumbN = resultItems[i]["volumeInfo"]["imageLinks"]["thumbnail"];
-      // console.log("Small Img: " + BookSThumbN);
-      // console.log("Img: " + BookThumbN);
 
       $itemImg = $("<img>").attr("src", BookThumbN).addClass("img-border");
 
@@ -304,7 +268,6 @@ function displaySearchResult(result) {
     var BookID = resultItems[i]["volumeInfo"]["industryIdentifiers"];
     if (BookID) {
       var BookIDLen = BookID.length;
-      //console.log(BookIDLen);
       var $disp_id_head = $("<div>")
         .addClass("item-id")
         .append("Identifier(s):");
@@ -373,9 +336,7 @@ function handleEvent(event) {
     var trgt = event.target;
     var name = trgt.textContent;
     var search_name = name.slice(0, name.length - 1);
-    //console.log(search_name);
     searchQuery = search_name;
-    //loc_type = "city";
     handleSearch();
   }
 
@@ -387,7 +348,6 @@ function handleEvent(event) {
     displayHistEl();
 
     clearForm();
-    // location.reload();
   }
 
   if (target_el.id === "infoLink") {
@@ -445,7 +405,6 @@ function initiate() {
   getBestSellerAPI();
   $searchContainer.hide();
   $searchTxt.focus();
-  //console.log(arr_hisSearch);
 }
 
 initiate();
