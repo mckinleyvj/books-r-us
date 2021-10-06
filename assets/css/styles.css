@@ -192,6 +192,7 @@ h2 {
 	min-height: 237px;
 	margin: 10px 0;
 	border-radius: 12px;
+	width: 100%;
 }
 
 .search-history-list {
