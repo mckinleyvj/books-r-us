@@ -13,7 +13,7 @@
 
 /* end of global variables */
 .header-container {
-	min-height: 45vh;
+	min-height: 40vh;
 	background-image: url("https://source.unsplash.com/1600x900/?library");
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -146,7 +146,8 @@ select {
 }
 
 .best-seller-container h4 {
-	font-size: 13px;
+	font-size: 15px;
+	padding-bottom: 8px;
 }
 
 .bestseller-list {
