@@ -77,12 +77,12 @@ function getBestSellerAPI() {
     // declare best sellers in a response
     var bestSellers = response.results.books;
     var displayList = "";
-
-    for (var i = 0; i < 5; i++) {
+    console.log(response);
+        for (var i = 0; i < 5; i++) {
       displayList = `
         <div class="bestseller-list">
         <h4>${bestSellers[i].title}</h4>
-        <img class="best-seller-img" src="${bestSellers[i].book_image}">
+        <a href="${bestSellers[i].amazon_product_url}" target="_blank"><img alt="Image not available" class="best-seller-img" id="best-seller-img" src="${bestSellers[i].book_image}"></a>
         <br>
         <p>Ranking: ${bestSellers[i].rank}</p>
         <p>Last Week Ranking: ${bestSellers[i].rank_last_week || "N/A"}</p>
@@ -398,6 +398,11 @@ function handleEvent(event) {
   if (target_el.id === "previewLink") {
     var previewLink = target_el.getAttribute("href");
     window.open(previewLink, "_blank");
+  }
+
+  if (target_el.id === "best-seller-img") {
+    var bestSellerUrl = target_el.parentElement.getAttribute("href");
+    window.open(bestSellerUrl, "_blank");
   }
 }
 
