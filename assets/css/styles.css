@@ -50,6 +50,7 @@ select {
 	border-radius: 15px;
 	padding: 10px;
 	display: inline-block;
+	margin: 0 5px;
 }
 
 .main-container {
@@ -91,6 +92,7 @@ select {
 	border: 2.5px solid black;
 	border-radius: 15px;
 	cursor: pointer;
+	margin: 0 5px;
 }
 
 .input-error {
@@ -139,10 +141,10 @@ select {
 	flex-direction: row;
 	align-items: center;
 	text-align: center;
-	border: 5px solid black;
+	/* border: 5px solid black; */
 	padding: 8px;
 	width: 100%;
-	justify-content: center;
+	justify-content: space-between;
 	border-radius: 15px;
 }
 
