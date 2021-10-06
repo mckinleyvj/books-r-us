@@ -76,7 +76,7 @@ function getBestSellerAPI() {
     // declare best sellers in a response
     var bestSellers = response.results.books;
     var displayList = "";
-    console.log(response);
+    
         for (var i = 0; i < 5; i++) {
       displayList = `
         <div class="bestseller-list">
