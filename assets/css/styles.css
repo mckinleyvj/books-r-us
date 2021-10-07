@@ -70,9 +70,11 @@ select {
 }
 
 .search-form {
-	width: 100%;
+	width: 65%;
 	display: flex;
 	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 /* consider the border property repetition WIP */
@@ -278,6 +280,9 @@ h2 {
 	.bestseller-list {
 		flex: 1 33.33%;
 	}
+	.search-form {
+		width: 80%;
+	}
 }
 
 @media screen and (max-width: 800px) {
@@ -332,5 +337,11 @@ h2 {
 	}
 	.bestseller-list {
 		flex: 1 100%;
+	}
+	.search-form {
+		width: 100%;
+	}
+	.search-input {
+		width: 200px;
 	}
 }
