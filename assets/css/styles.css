@@ -70,7 +70,7 @@ select {
 }
 
 .search-form {
-	width: 65%;
+	width: 55%;
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
