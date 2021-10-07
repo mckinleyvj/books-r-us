@@ -38,6 +38,11 @@ This two weeks group project, we will be creating a book search webpage using 2 
 - Media Query was used for display settings for multiple resolutions.
 
 ## Screenshots:
+![image](https://user-images.githubusercontent.com/87624839/136368265-ef47f4a0-5561-44ae-a2a3-9502a127d4f6.png)
+Landing Page featuring the best sellers from new york times.
+
+![image](https://user-images.githubusercontent.com/87624839/136368466-99b4e2f2-0cf6-453f-9eeb-4b9f03d781ae.png)
+Displaying search results.
 
 ## Related Links:
 
